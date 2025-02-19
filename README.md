@@ -121,7 +121,7 @@ For better compatibility I use [MP4Box](https://wiki.gpac.io/MP4Box/MP4Box/) to 
 
 ### Remuxing into the final MP4
 
-The [Remux DoVi MP4](FlowPluginsTs/CommunityFlowPlugins/ffmpegCommand/ffmpegCommandRemuxDoviMp4/1.0.0/index.ts) plugin is responsible for creating the right ffmpeg arguments to mux the correct streams together. The plugin will take the video stream from the mp4 file created in the previous step and mux it together with the audio streams from the original file. There are a couple of extra steps involved here: TrueHD audio streams are dropped as ffmpeg support for them in mp4 containers is experimental and I couldn't get it to work properly. Also metadata is copied from the original file.
+The [Remux DoVi MP4](FlowPluginsTs/CommunityFlowPlugins/ffmpegCommand/ffmpegCommandDoviRemuxMp4/1.0.0/index.ts) plugin is responsible for creating the right ffmpeg arguments to mux the correct streams together. The plugin will take the video stream from the mp4 file created in the previous step and mux it together with the audio streams from the original file. There are a couple of extra steps involved here: TrueHD audio streams are dropped as ffmpeg support for them in mp4 containers is experimental and I couldn't get it to work properly. Also metadata is copied from the original file.
 
 Stream titles are handled differently in mp4 containers than in mkv, to deal with this the original audio stream titles are mapped to the `handler_name` metadata tag in the output file as Jellyfin [will use that](https://github.com/jellyfin/jellyfin/blob/v10.8.13/MediaBrowser.MediaEncoding/Probing/ProbeResultNormalizer.cs#L703-L711) to read stream titles as a fallback.
 
@@ -211,7 +211,7 @@ Check DoVi profile
 
 ## Remuxing Dolby Vision content without transcoding
 
-The [Remux DoVi MP4](FlowPluginsTs/CommunityFlowPlugins/ffmpegCommand/ffmpegCommandRemuxDoviMp4/1.0.0/index.ts) plugin can also handle remuxing an input mkv file into a playable mp4 file without transcoding the video. Use the [Set Container](FlowPluginsTs/CommunityFlowPlugins/ffmpegCommand/ffmpegCommandSetContainer/1.0.0/index.ts) plugin before to set the container to mp4 then this plugin to remux. Same as [previously](#remuxing-into-the-final-mp4) TrueHD audio streams are dropped and metadata is copied and mapped for audio streams.
+The [Remux DoVi MP4](FlowPluginsTs/CommunityFlowPlugins/ffmpegCommand/ffmpegCommandDoviRemuxMp4/1.0.0/index.ts) plugin can also handle remuxing an input mkv file into a playable mp4 file without transcoding the video. Use the [Set Container](FlowPluginsTs/CommunityFlowPlugins/ffmpegCommand/ffmpegCommandSetContainer/1.0.0/index.ts) plugin before to set the container to mp4 then this plugin to remux. Same as [previously](#remuxing-into-the-final-mp4) TrueHD audio streams are dropped and metadata is copied and mapped for audio streams.
 
 I recommend to [extract](#extracting-the-stream) subtitle streams beforehand to keep them using the [blackhole](#move-folder-content-to-blachole) plugin.
 
